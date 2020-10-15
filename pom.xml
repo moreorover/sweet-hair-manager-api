@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>martin.dev</groupId>
-    <artifactId>sweethair</artifactId>
+    <artifactId>sweethair-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sweethair</name>
-    <description>Backend for Sweet Hair</description>
+    <name>sweet-hair-manager-api</name>
+    <description>Backend for Sweet Hair Manager</description>
 
     <properties>
         <java.version>11</java.version>

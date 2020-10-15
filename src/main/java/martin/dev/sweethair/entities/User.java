@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @Data
@@ -25,4 +27,11 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String lastName;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name = "user_id")
+    private List<Appointment> appointments = new ArrayList<>();
 }

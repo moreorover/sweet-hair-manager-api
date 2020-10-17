@@ -13,4 +13,5 @@ public class AppointmentDtoPost {
     private LocalTime startTime;
     private LocalTime finishTime;
     private Long userId;
+    private String description;
 }

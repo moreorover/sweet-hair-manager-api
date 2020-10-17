@@ -24,6 +24,7 @@ public class AppointmentService {
                 .date(appointmentDtoPost.getDate())
                 .startTime(appointmentDtoPost.getStartTime())
                 .finishTime(appointmentDtoPost.getFinishTime())
+                .description(appointmentDtoPost.getDescription())
                 .build();
         return appointmentRepository.save(appointment);
     }
@@ -45,7 +46,8 @@ public class AppointmentService {
 
         appointment.setDate(appointmentDtoBase.getDate());
         appointment.setStartTime(appointmentDtoBase.getStartTime());
-        appointment.setStartTime(appointmentDtoBase.getFinishTime());
+        appointment.setFinishTime(appointmentDtoBase.getFinishTime());
+        appointment.setDescription(appointment.getDescription());
         appointmentRepository.save(appointment);
         return appointment;
     }

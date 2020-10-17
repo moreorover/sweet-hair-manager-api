@@ -33,4 +33,7 @@ public class Appointment {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @Column(nullable = true)
+    private String description;
+
 }

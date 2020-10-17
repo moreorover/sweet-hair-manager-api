@@ -16,4 +16,5 @@ public class AppointmentDtoBase {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime finishTime;
+    private String description;
 }

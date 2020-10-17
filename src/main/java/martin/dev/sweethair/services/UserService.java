@@ -1,7 +1,7 @@
 package martin.dev.sweethair.services;
 
 import lombok.AllArgsConstructor;
-import martin.dev.sweethair.dtos.PostUserDto;
+import martin.dev.sweethair.dtos.UserDtoPost;
 import martin.dev.sweethair.entities.User;
 import martin.dev.sweethair.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User save(PostUserDto postUserDto) {
+    public User save(UserDtoPost userDtoPost) {
         return userRepository.save(
                 User.builder()
-                        .firstName(postUserDto.getFirstName())
-                        .lastName(postUserDto.getLastName())
+                        .firstName(userDtoPost.getFirstName())
+                        .lastName(userDtoPost.getLastName())
                         .build());
     }
 
@@ -34,11 +34,11 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User updateById(PostUserDto postUserDto) {
-        User user = userRepository.getById(postUserDto.getId());
+    public User updateById(UserDtoPost userDtoPost) {
+        User user = userRepository.getById(userDtoPost.getId());
 
-        user.setFirstName(postUserDto.getFirstName());
-        user.setLastName(postUserDto.getLastName());
+        user.setFirstName(userDtoPost.getFirstName());
+        user.setLastName(userDtoPost.getLastName());
         userRepository.save(user);
         return user;
     }

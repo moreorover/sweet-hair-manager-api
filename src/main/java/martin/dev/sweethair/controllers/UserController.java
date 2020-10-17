@@ -1,14 +1,18 @@
 package martin.dev.sweethair.controllers;
 
 import lombok.AllArgsConstructor;
-import martin.dev.sweethair.dtos.PostUserDto;
+import martin.dev.sweethair.dtos.UserDtoPost;
+import martin.dev.sweethair.dtos.base.UserDtoBase;
+import martin.dev.sweethair.dtos.full.UserDtoFull;
 import martin.dev.sweethair.entities.User;
 import martin.dev.sweethair.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -17,23 +21,27 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getAll() {
-        List<User> users = userService.getAll();
+    public ResponseEntity<List<UserDtoFull>> getAll() {
+        List<UserDtoFull> users = userService.getAll().stream()
+                .map(user -> modelMapper.map(user, UserDtoFull.class)).collect(Collectors.toList());
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody PostUserDto postUserDto) {
-        User user = userService.save(postUserDto);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    public ResponseEntity<UserDtoBase> create(@RequestBody UserDtoPost userDtoPost) {
+        User user = userService.save(userDtoPost);
+        UserDtoBase userDtoBase = modelMapper.map(user, UserDtoBase.class);
+        return new ResponseEntity<>(userDtoBase, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDtoFull> getById(@PathVariable("id") Long id) {
         User user = userService.getById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        UserDtoFull userDtoFull = modelMapper.map(user, UserDtoFull.class);
+        return new ResponseEntity<>(userDtoFull, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -43,8 +51,9 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updateById(@RequestBody PostUserDto postUserDto) {
-        User user = userService.updateById(postUserDto);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<UserDtoFull> updateById(@RequestBody UserDtoPost userDtoPost) {
+        User user = userService.updateById(userDtoPost);
+        UserDtoFull userDtoFull = modelMapper.map(user, UserDtoFull.class);
+        return new ResponseEntity<>(userDtoFull, HttpStatus.OK);
     }
 }
